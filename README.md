@@ -133,3 +133,38 @@ provisioner "remote-exec" {
 
   }
 ```
+<h4>Building a CI/CD Pipeline</h4>
+Further this can be automated through a Jenkins CI/CD Pipeline as stages. The following Jenkinsfile can create the infrastructure and deploy the application.
+
+```
+pipeline {
+    agent any
+  parameters {
+    password (name: 'your-aws-access-id')
+    password (name: 'your-aws-access-key')
+  }
+  environment {
+    TF_WORKSPACE = 'dev' //Sets the Terraform Workspace
+    TF_IN_AUTOMATION = 'true'
+    AWS_ACCESS_KEY_ID = "your-aws-access-id"
+    AWS_SECRET_ACCESS_KEY = "your-aws-access-key"
+  }
+stages {
+    stage('Terraform init') {
+      steps {
+        sh "cd /path_to_your_main.tf && terraform init -input=false"
+      }
+    }
+    stage('Terraform plan') {
+      steps {
+        sh "cd /path_to_your_main.tf && terraform plan -out=tfplan -input=false "
+      }
+    }
+    stage('Terraform apply') {
+      steps {
+        sh "cd /path_to_your_main.tf && terraform apply -input=false -out=tfplan"
+      }
+    }
+}
+}
+```
