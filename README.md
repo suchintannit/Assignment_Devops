@@ -26,7 +26,6 @@ sudo docker exec -i mydb mysql -u root -p1234 < path to/db-sql.sql
 
 ```
 
-<h4>NOTE: Once the above sc</h4>
 <h3>Creating the frontend.sh to automate the frontend. The script installs docker and runs our frontend app from dockerhub.</h3>
 
 ```
@@ -48,10 +47,13 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 #Pull and Run the Frontend PHP Container
 sudo docker pull suchintantraining/frontend
-#Link the frontend container with the 'mydb' mysql-server container
+#Link the frontend container with the 'mydb' mysql-server container run in the previous step
 sudo docker run --name mydb -e MYSQL_ROOT_PASSWORD=1234 -p 3306:3306 -d mysql:5.7
 ```
 
 <h3> How the Frontend Container is created.</h3>
-
+The Frontend Container is a simple PHP application that takes user input using HTML forms and stores the data in the container running the backend. The frontend container is created using the 3 files 
+  
+1. item 1
+2. item 2
 <h3> How the Backend is Initialized</h3>
