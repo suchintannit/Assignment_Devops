@@ -1,6 +1,6 @@
 <h1>A Two Tier Application Consisting of a PHP Frontend and a MYSQL Backend Running on Individual Containers.</h1>
 
-<h4>1. Creating the backend.sh to automate the backend. The backend runs a mysql-server container and hosts the Table that stores data from the frontend.The script installs docker in the backend instance and runs the mysql-server container fromdockerhub. Then, running the mysql script using docker exec creates the backend.</h4>
+<h4>1. Creating the backend.sh to automate the backend. The backend runs a mysql-server container and hosts the Table that stores data from the frontend.The script installs docker in the backend instance and runs the mysql-server container from dockerhub. Then, running the mysql script using docker exec creates the backend.</h4>
   <h5>MYSQL Script - https://github.com/suchintannit/Assignment_Devops/blob/main/db-sql.sql</h5>
 
 ```
@@ -71,7 +71,7 @@ ADD . /var/www/html
 EXPOSE 80
 CMD [“apache2ctl”, “-D”, “FOREGROUND”]
 ```
-The Dockerfile (when build as an image) copies the ubuntu image and makes the frontend non-interactive. It then updates the container and installs apache, php and its modules. It copies the folder containing the 3 files mentioned above to the containers /var/www/html. It exposes port 80 of the container and as entrypoint adds a command to run apache in the foreground.
+The Dockerfile (when build as an image) copies the ubuntu image and makes the frontend non-interactive. It then updates the image and installs apache, php and its modules. It copies the folder containing the 3 files mentioned above to the containers /var/www/html. It exposes port 80 of the container and as entrypoint adds a command to run apache in the foreground.
 
 After writing the Dockerfile the image can be build and pushed to dockerhub using the following command:
 ```
