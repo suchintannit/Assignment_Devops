@@ -54,6 +54,26 @@ sudo docker run --name mydb -e MYSQL_ROOT_PASSWORD=1234 -p 3306:3306 -d mysql:5.
 <h3> How the Frontend Container is created.</h3>
 The Frontend Container is a simple PHP application that takes user input using HTML forms and stores the data in the container running the backend. The frontend container is created using the 3 files 
   
-1. item 1
-2. item 2
-<h3> How the Backend is Initialized</h3>
+1. index.html - 
+2. contact.php
+3. db-sql.sql
+
+Once these file are written in any directory, a Dockerfile can be created as shown below
+```
+FROM ubuntu
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -y
+RUN apt-get install apache2 -y
+RUN apt-get install php -y
+RUN apt-get install php-mysql -y
+ADD . /var/www/html
+EXPOSE 80
+CMD [“apache2ctl”, “-D”, “FOREGROUND”]
+```
+The Dockerfile copies the ubuntu image and makes the frontend noninteractive. It then updates the container and installs apache, php and its modules. It copies the folder containing the 3 files mentioned above to the containers /var/www/html. It exposes port 80 of the container and as entrypoint adds a command to run apache in the forground.
+After writing the Dockerfile the image can be build and pushed to dockerhub using the following command:
+```
+sudo docker build -t frontend
+sudo docker tag frontend suchintantraining/frontend
+sudo docker push suchintantraining/frontend
+```
