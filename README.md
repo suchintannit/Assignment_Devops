@@ -1,6 +1,7 @@
 <h1>A Two Tier Application Consisting of a PHP Frontend and a MYSQL Backend Running on Individual Containers</h1>
 
-<h4>Step:1 Creating the backend.sh to automate the backend. The backend runs a mysql-server container and hosts the Table that stores data from the frontend.The script installs docker in the backend instance and runs the mysql-server container fromdockerhub. Then, running the mysql script using docker exec creates the backend. MYSQL Script -https://github.com/suchintannit/Assignment_Devops/blob/main/db-sql.sql</h4>
+<h4>Step:1 Creating the backend.sh to automate the backend. The backend runs a mysql-server container and hosts the Table that stores data from the frontend.The script installs docker in the backend instance and runs the mysql-server container fromdockerhub. Then, running the mysql script using docker exec creates the backend.</h4>
+  <h5>MYSQL Script -https://github.com/suchintannit/Assignment_Devops/blob/main/db-sql.sql</h5>
 
 ```
 #Install Docker in the Backend
