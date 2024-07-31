@@ -1,6 +1,6 @@
 <h1>A Two Tier Application Consisting of a PHP Frontend and a MYSQL Backend Running on Individual Containers</h1>
 
-<h3>Step:1 Creating the backend.sh to automate the backend. The backend runs a mysql-server container and hosts the Table that stores data from the frontend.The script installs docker in the backend instance and runs the mysql-server container from dockerhub.</h3>
+<h3>Step:1 Creating the backend.sh to automate the backend. The backend runs a mysql-server container and hosts the Table that stores data from the frontend.The script installs docker in the backend instance and runs the mysql-server container fromdockerhub. [db-sql.sql](https://github.com/suchintannit/Assignment_Devops/blob/main/db-sql.sql)</h3>
 
 ```
 #Install Docker in the Backend
@@ -21,7 +21,7 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 #Pull and Run the Mysql-server conatiner and change the root user password to 1234
 docker run — name mydb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=1234 -d mysql:5.7
-#Once the container executes, we run the [db-sql.sql](https://github.com/suchintannit/Assignment_Devops/blob/main/db-sql.sql) script in backend to create the database without logging into the mysql prompt.
+#Once the container executes, we run the Mysql script in backend to create the database without logging into the mysql prompt.
 sudo docker exec -i mydb mysql -u root -p1234 < path to/db-sql.sql
 
 ```
