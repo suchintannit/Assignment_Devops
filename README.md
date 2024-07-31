@@ -27,7 +27,7 @@ sudo docker exec -i mydb mysql -u root -p1234 < path to/db-sql.sql
 
 ```
 
-<h4>Step:2 Creating the frontend.sh to automate the frontend. The script installs docker and runs our frontend app from dockerhub.</h4>
+<h4>2. Creating the frontend.sh to automate the frontend. The script installs docker and runs our frontend app from dockerhub.</h4>
 
 ```
 #Install Docker in the Frontend
