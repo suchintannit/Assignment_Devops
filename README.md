@@ -49,7 +49,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 #Pull and Run the Frontend PHP Container
 sudo docker pull suchintantraining/frontend
 #Link the frontend container with the 'mydb' mysql-server container run in the previous step
-sudo docker run --name mydb -e MYSQL_ROOT_PASSWORD=1234 -p 3306:3306 -d mysql:5.7
+sudo docker run -dp 80:80 --link mydb:mydb 4bda355c9da1
 ```
 
 <h3> How the Frontend Container is created.</h3>
