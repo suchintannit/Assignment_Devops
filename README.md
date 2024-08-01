@@ -170,3 +170,61 @@ stages {
 }
 }
 ```
+<h2>Additional Steps to Run the Containers on 2 different Instances.</h2>
+The instances are supposed to execute in the same AWS VPC but Frontend instance runs on the Public subnet while the the Backend instance runs on the private subnet. Using docker swarm, 2 contaners running on host1 and host2 can communicate. Using the following additional changes to the frontend and backend script.
+
+```
+#On Backend Run the following command
+sudo docker swarm init --advertise-addr 10.0.2.232
+
+#On Frontend Run the following for it to join the Backend
+docker swarm join --token SWMTKN-1-33whghul7v7923zmcq5lxhj4b50d6an12ljorohzpwwlu1qfqf-8z66lgpxuvf1cd6ctajkxhnb9 10.0.2.232:2377
+```
+By adding these lines to frontend.sh and backend.sh (after installing docker) and (before running contaners) can allow the systems to communicate with each other.
+
+updated Backend.sh
+```
+#! /bin/bash
+sudo apt-get update -y
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo docker swarm init --advertise-addr 10.0.2.232
+#Pull and Run the Mysql-server conatiner and change the root user password to 1234
+docker run — name mydb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=1234 -d mysql:5.7
+#Once the container executes, we run the Mysql script in backend to create the database without logging into the mysql prompt.
+sudo docker exec -i mydb mysql -u root -p1234 < path to/db-sql.sql
+```
+
+Updated Frontend.sh:
+
+```
+#! /bin/bash
+sudo apt-get update -y
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+#Pull and Run the Mysql-server conatiner and change the root user password to 1234
+docker swarm join --token SWMTKN-1-33whghul7v7923zmcq5lxhj4b50d6an12ljorohzpwwlu1qfqf-8z66lgpxuvf1cd6ctajkxhnb9 10.0.2.232:2377
+sudo docker run -dp 80:80 --link mydb:mydb 4bda355c9da1
+```
