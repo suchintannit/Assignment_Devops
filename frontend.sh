@@ -16,5 +16,5 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 #Pull and Run the Frontend PHP Container
 sudo docker pull suchintantraining/frontend
-#Link the frontend container with the 'mydb' mysql-server container run in the previous step
+#Link the frontend container with the 'mydb' mysql-server container run in the previous step using frontend ontainer id.
 sudo docker run -dp 80:80 --link mydb:mydb 4bda355c9da1
