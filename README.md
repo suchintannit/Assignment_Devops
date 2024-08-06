@@ -55,8 +55,8 @@ sudo docker run -dp 80:80 --link mydb:mydb 4bda355c9da1
 <h3> How the Frontend Container is created.</h3>
 The Frontend Container is a simple PHP application that takes user input using HTML forms and stores the data in the container running the backend. The frontend container is created using the 3 files.
   
-1. index.html - https://github.com/suchintannit/Assignment_Devops/blob/main/contact.php 
-2. contact.php - https://github.com/suchintannit/Assignment_Devops/blob/main/index.html
+1. contact.php - https://github.com/suchintannit/Assignment_Devops/blob/main/contact.php 
+2. index.html - https://github.com/suchintannit/Assignment_Devops/blob/main/index.html
 3. db-sql.sql - https://github.com/suchintannit/Assignment_Devops/blob/main/db-sql.sql
 
 Once these file are written in any directory, a Dockerfile can be created as shown below,
